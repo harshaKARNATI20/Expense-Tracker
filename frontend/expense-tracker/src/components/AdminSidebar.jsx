@@ -1,27 +1,25 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
-  FaHome,
-  FaMoneyBillWave,
-  FaChartPie,
+  FaUsers,
+  FaChartLine,
   FaSignOutAlt,
   FaBars,
   FaTimes,
 } from "react-icons/fa";
 
-const Sidebar = () => {
+const AdminSidebar = () => {
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false); // For mobile menu
+  const [isOpen, setIsOpen] = useState(false); // Mobile menu toggle
 
   const links = [
-    { name: "Dashboard", path: "/dashboard/home", icon: <FaHome /> },
-    { name: "Income", path: "/dashboard/income", icon: <FaMoneyBillWave /> },
-    { name: "Expense", path: "/dashboard/expense", icon: <FaChartPie /> },
+    { name: "User Management", path: "/admin/dashboard", icon: <FaUsers /> },
+    { name: "Analytics", path: "/admin/analytics", icon: <FaChartLine /> },
   ];
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/admin/login";
   };
 
   return (
@@ -37,7 +35,7 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-screen w-60 bg-[#875cf5] text-white p-4 flex flex-col justify-between z-40 transition-transform duration-300 ease-in-out
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
         md:translate-x-0 md:static md:flex`}
       >
         {/* Mobile close icon */}
@@ -49,7 +47,7 @@ const Sidebar = () => {
 
         {/* Brand */}
         <div className="text-2xl font-bold mb-8 tracking-wide">
-          💸 Expense Tracker
+          🛠 Admin Panel
         </div>
 
         {/* Navigation */}
@@ -60,7 +58,7 @@ const Sidebar = () => {
               <NavLink
                 key={name}
                 to={path}
-                onClick={() => setIsOpen(false)}
+                onClick={() => setIsOpen(false)} // close sidebar on click (mobile)
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 ${
                   isActive
                     ? "bg-white text-[#875cf5] font-semibold"
@@ -73,7 +71,7 @@ const Sidebar = () => {
           })}
         </nav>
 
-        {/* Logout */}
+        {/* Logout button */}
         <button
           onClick={handleLogout}
           className="mt-6 flex items-center gap-3 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg transition"
@@ -82,7 +80,7 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {/* Background overlay for mobile */}
+      {/* Overlay on mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-30 md:hidden"
@@ -93,4 +91,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;

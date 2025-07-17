@@ -14,9 +14,12 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  const login = (newToken) => {
-    setToken(newToken);
-  };
+ // AuthContext.jsx
+const login = (token) => {
+  localStorage.setItem("token", token);
+  setToken(token);
+};
+
 
   const logout = () => {
     setToken(null);

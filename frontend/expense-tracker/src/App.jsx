@@ -12,33 +12,49 @@ import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
 import { useAuth } from "./context/AuthContext";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
+import PrivateAdminRoute from "./components/Routes/PrivateAdminRoute";
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminAnalytics from "./pages/Admin/AdminAnalytics"; // ✅ Fixed path
 
-// Protected Route wrapper
+// 🔐 Route for authenticated users (user or admin)
 const ProtectedRoute = ({ children }) => {
   const { token } = useAuth();
   return token ? children : <Navigate to="/login" />;
 };
 
-// Redirection logic for root "/"
+// 🔐 Redirect root based on login and role
 const RootRedirect = () => {
   const { token } = useAuth();
-  return <Navigate to={token ? "/dashboard" : "/login"} />;
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!token) return <Navigate to="/login" />;
+  return user?.isAdmin ? (
+    <Navigate to="/admin/dashboard" />
+  ) : (
+    <Navigate to="/dashboard/home" />
+  );
 };
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Root Redirect */}
+        {/* 🌐 Default root redirect */}
         <Route path="/" element={<RootRedirect />} />
 
-        {/* Public Routes */}
+        {/* 🔓 Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* Protected Routes */}
+        {/* 👤 User Routes (Protected) */}
         <Route
           path="/dashboard"
+          element={<Navigate to="/dashboard/home" />}
+        />
+        <Route
+          path="/dashboard/home"
           element={
             <ProtectedRoute>
               <Home />
@@ -46,7 +62,7 @@ const App = () => {
           }
         />
         <Route
-          path="/income"
+          path="/dashboard/income"
           element={
             <ProtectedRoute>
               <Income />
@@ -54,11 +70,29 @@ const App = () => {
           }
         />
         <Route
-          path="/expense"
+          path="/dashboard/expense"
           element={
             <ProtectedRoute>
               <Expense />
             </ProtectedRoute>
+          }
+        />
+
+        {/* 🛡️ Admin-only Routes */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <PrivateAdminRoute>
+              <AdminDashboard />
+            </PrivateAdminRoute>
+          }
+        />
+        <Route
+          path="/admin/analytics"
+          element={
+            <PrivateAdminRoute>
+              <AdminAnalytics />
+            </PrivateAdminRoute>
           }
         />
       </Routes>

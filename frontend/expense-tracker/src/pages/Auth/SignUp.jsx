@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import AuthLayout from '../../components/Layouts/AuthLayout';
-import Input from '../../components/Inputs/Input';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import AuthLayout from "../../components/Layouts/AuthLayout";
+import Input from "../../components/Inputs/Input";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    // Simple validation
+    // Basic validations
     if (!name || !email || !password) {
       setError("Please fill in all fields.");
       return;
@@ -24,10 +25,23 @@ const SignUp = () => {
       return;
     }
 
-    // TODO: Add sign-up API logic here
-    console.log("Creating account with:", name, email, password);
-    setError(null);
-    // navigate('/login'); // optionally redirect
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+        name,
+        email,
+        password,
+      });
+
+      if (res.status === 201 || res.data.token) {
+        setError(null);
+        localStorage.setItem("token", res.data.token); // optional
+        navigate("/dashboard"); // or navigate("/login")
+      } else {
+        setError(res.data.message || "Signup failed. Please try again.");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Signup failed");
+    }
   };
 
   return (
@@ -65,15 +79,18 @@ const SignUp = () => {
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          <button type="submit" className="bg-[#875cf5] hover:bg-[#6c42e0] text-white font-medium py-2 px-4 rounded-lg transition duration-300 w-full mt-2">
+          <button
+            type="submit"
+            className="bg-[#875cf5] hover:bg-[#6c42e0] text-white font-medium py-2 px-4 rounded-lg transition duration-300 w-full mt-2"
+          >
             Sign Up
           </button>
 
           <p className="text-sm text-center mt-4">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <span
               className="text-[#875cf5] cursor-pointer font-medium hover:underline"
-              onClick={() => navigate('/login')}
+              onClick={() => navigate("/login")}
             >
               Login
             </span>

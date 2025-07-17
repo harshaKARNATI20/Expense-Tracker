@@ -4,14 +4,24 @@ import Input from "../../components/Inputs/Input";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-
+import { useEffect } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login: saveTokenToContext } = useAuth();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (token && user?.isAdmin) {
+      navigate("/admin/dashboard");
+    } else if (token) {
+      navigate("/dashboard/home");
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,14 +37,21 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/v1/auth/login", {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
         email,
         password,
       });
 
       if (res.data.token) {
-        login(res.data.token); // Save token in context/localStorage
-        navigate("/dashboard");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        saveTokenToContext(res.data.token);
+
+        if (res.data.user.isAdmin) {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/dashboard/home");
+        }
       } else {
         setError("Invalid login response");
       }
@@ -70,7 +87,6 @@ const Login = () => {
 
           {error && <p className="text-red-500 text-sm mt-[-8px]">{error}</p>}
 
-          {/* Styled Purple Button */}
           <button
             type="submit"
             className="bg-[#875cf5] hover:bg-[#6c42e0] text-white py-2 px-4 rounded-lg transition w-full mt-2"
@@ -78,7 +94,7 @@ const Login = () => {
             Login
           </button>
 
-          <p className="text-sm text-center mt-4 text-slate-700">
+          {/* <p className="text-sm text-center mt-4 text-slate-700">
             Don’t have an account?{" "}
             <span
               className="text-[#875cf5] font-semibold hover:underline cursor-pointer"
@@ -86,7 +102,26 @@ const Login = () => {
             >
               Sign Up
             </span>
-          </p>
+          </p> */}
+
+          <div className="flex flex-col gap-2 mt-4">
+            <button
+              className="text-sm text-[#875cf5] font-semibold hover:underline"
+              onClick={() => navigate("/admin/login")}
+            >
+              Login as Admin
+            </button>
+
+            <p className="text-sm text-center text-slate-700">
+              Don’t have an account?{" "}
+              <span
+                className="text-[#875cf5] font-semibold hover:underline cursor-pointer"
+                onClick={() => navigate("/signup")}
+              >
+                Sign Up
+              </span>
+            </p>
+          </div>
         </form>
       </div>
     </AuthLayout>
