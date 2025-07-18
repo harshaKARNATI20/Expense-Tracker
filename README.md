@@ -30,56 +30,58 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) web application that hel
 
 ### 🔧 Backend (`/backend`)
 
+```
 backend/
-├── config/ # Configuration files (e.g., database)
-│ └── db.js
-├── controllers/ # Route handler logic
-│ ├── adminController.js
-│ ├── authController.js
-│ └── expenseController.js
-├── middlewares/ # Auth and error handling middleware
-│ └── authMiddleware.js
-├── models/ # Mongoose models
-│ ├── Expense.js
-│ ├── Income.js
-│ └── User.js
-├── routes/ # API routes
-│ ├── adminRoutes.js
-│ ├── authRoutes.js
-│ └── expenseRoutes.js
-├── utils/ # Utilities like Excel export
-│ └── exportToExcel.js
-├── .env # Environment variables
-├── app.js # App config and middleware
-└── server.js # Entry point to start the backend server
-
+├── config/                 # Configuration files (e.g., database)
+│   └── db.js
+├── controllers/           # Route handler logic
+│   ├── adminController.js
+│   ├── authController.js
+│   └── expenseController.js
+├── middlewares/           # Auth and error handling middleware
+│   └── authMiddleware.js
+├── models/                # Mongoose models
+│   ├── Expense.js
+│   ├── Income.js
+│   └── User.js
+├── routes/                # API routes
+│   ├── adminRoutes.js
+│   ├── authRoutes.js
+│   └── expenseRoutes.js
+├── utils/                 # Utilities like Excel export
+│   └── exportToExcel.js
+├── .env                   # Environment variables
+├── app.js                 # App config and middleware
+└── server.js              # Entry point to start the backend server
+```
 
 ### 🌐 Frontend (`/frontend`)
 
+```
 frontend/
-├── public/ # Static files and favicons
+├── public/                # Static files and favicons
 ├── src/
-│ ├── assets/ # Icons, logos, and images
-│ ├── components/ # Reusable components (charts, cards, layout)
-│ │ ├── Chart.js
-│ │ ├── Sidebar.js
-│ │ ├── Navbar.js
-│ │ └── IncomeCard.js
-│ ├── pages/ # Main pages
-│ │ ├── Login.js
-│ │ ├── Register.js
-│ │ ├── Dashboard.js
-│ │ ├── Income.js
-│ │ ├── Expense.js
-│ │ ├── AdminDashboard.js
-│ │ └── UserManagement.js
-│ ├── services/ # API interaction logic
-│ │ ├── authService.js
-│ │ └── expenseService.js
-│ ├── App.js # App routes and layout
-│ ├── index.js # React root render
-│ └── styles.css # Tailwind or custom CSS
-
+│   ├── assets/            # Icons, logos, and images
+│   ├── components/        # Reusable components (charts, cards, layout)
+│   │   ├── Chart.js
+│   │   ├── Sidebar.js
+│   │   ├── Navbar.js
+│   │   └── IncomeCard.js
+│   ├── pages/             # Main pages
+│   │   ├── Login.js
+│   │   ├── Register.js
+│   │   ├── Dashboard.js
+│   │   ├── Income.js
+│   │   ├── Expense.js
+│   │   ├── AdminDashboard.js
+│   │   └── UserManagement.js
+│   ├── services/          # API interaction logic
+│   │   ├── authService.js
+│   │   └── expenseService.js
+│   ├── App.js             # App routes and layout
+│   ├── index.js           # React root render
+│   └── styles.css         # Tailwind or custom CSS
+```
 
 ---
 
@@ -112,45 +114,62 @@ frontend/
 
 ```bash
 git clone https://github.com/harshaKARNATI20/Expense-Tracker.git
-cd Expense-Tracker
+cd expense-tracker
+```
 
-📌 Backend Setup
+---
+
+### 📌 Backend Setup
+
+```bash
 cd backend
 npm install
+```
 
-Create a .env file in backend/ and add:
+Create a `.env` file in `backend/` and add:
+
+```
 PORT=5000
 MONGO_URI=your_mongodb_connection_uri
 JWT_SECRET=your_jwt_secret
+```
 
 Run the server:
+```bash
 npm start
+```
 
-🌐 Frontend Setup
+---
+
+### 🌐 Frontend Setup
+
+```bash
 cd frontend
 npm install
 npm start
+```
 
-⚙️ Tech Stack
-Frontend: React, Chart.js, Tailwind CSS / Bootstrap
+---
 
-Backend: Node.js, Express.js
+## ⚙️ Tech Stack
 
-Database: MongoDB with Mongoose
+- **Frontend**: React, Chart.js, Tailwind CSS / Bootstrap
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB with Mongoose
+- **Auth**: JSON Web Tokens (JWT)
+- **Export**: ExcelJS or SheetJS
+- **Charts**: Chart.js (Bar, Pie, Line)
 
-Auth: JSON Web Tokens (JWT)
+---
 
-Export: ExcelJS or SheetJS
+## 🧾 License
 
-Charts: Chart.js (Bar, Pie, Line)
-
-🧾 License
 This project is licensed under the MIT License. Feel free to use and modify it.
 
-✍️ Author
-Your Name – harshavardhanhasty@gmail.com
+---
+
+## ✍️ Author
+
+**Your Name** – harshavardhanhasty@gmail.com
 
 Project Link: https://github.com/harshaKARNATI20/Expense-Tracker/
-
-
-
