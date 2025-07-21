@@ -89,6 +89,7 @@ frontend/
 
 ### 🔐 User Screens
 - ![Login Page](screenshots/login.png)
+- ![SignUp Page](screenshots/signup.png)
 - ![User Dashboard](screenshots/user_dashboard.png)
 - ![Income Page](screenshots/income.png)
 - ![Expense Page](screenshots/expense.png)
@@ -96,8 +97,8 @@ frontend/
 ### ⚙️ Admin Screens
 - ![Admin Login](screenshots/admin_login.png)
 - ![Admin Dashboard](screenshots/admin_dashboard.png)
-- ![User Management](screenshots/user_management.png)
 - ![Admin Analytics](screenshots/admin_analytics.png)
+- ![Admin Analytics(Pie Chart)](screenshots/admin_analytics2.png)
 
 > 📸 _To update screenshots, place images inside the `screenshots/` folder in your project root._
 
