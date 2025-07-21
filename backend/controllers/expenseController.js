@@ -2,21 +2,23 @@ const Expense = require('../models/Expense');
 
 exports.addExpense = async (req, res) => {
   try {
-    const { name, amount, category } = req.body;
+    const { title, amount, category } = req.body;
 
     const expense = await Expense.create({
       userId: req.user._id,
-      name,               // ✅ matches updated schema field
+      title,         // ✅ schema field
       amount,
       category,
     });
 
     res.status(201).json(expense);
   } catch (err) {
-    console.error("❌ Failed to add expense:", err); // log real error
+    console.error("❌ Failed to add expense:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
+
 
 
 exports.getExpenses = async (req, res) => {

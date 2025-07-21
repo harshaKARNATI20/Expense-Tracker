@@ -453,7 +453,7 @@ const Expense = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          name,
+          title:name,
           amount: Number(amount),
           category,
         }),
